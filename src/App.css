@@ -1,5 +1,20 @@
 .App {
   text-align: center;
+  height: 100vh;
+}
+:root[data-theme="light"] {
+  --text: #000000;
+  --background: #ecf3f3;
+  --primary: #4c7476;
+  --secondary: #d0e0e1;
+  --accent: #5a898c;
+}
+:root[data-theme="dark"] {
+  --text: #ffffff;
+  --background: #0c1313;
+  --primary: #89b1b3;
+  --secondary: #1e2e2f;
+  --accent: #73a2a5;
 }
 
 .App-logo {
@@ -13,17 +28,30 @@
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.header {
+  /* background: linear-gradient(#1e2e2f, rgba(0.1,0,0,0)) ; */
+  background: #1e2e2f;
+  min-width: 100vw;
+  padding: 4px 10px;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  justify-content: space-between;
+  font-size: calc(20px + 2vmin);
   color: white;
+  .icon{
+    
+  }
+  .profile {
+    width: calc(35px + 2vmin);
+    /* height: 6vh; */
+    border-radius: 50%;
+    border: #61dafb solid 2px;
+  }
 }
-
+.sidebar{
+  /* height: 100vmax; */
+}
 .App-link {
   color: #61dafb;
 }
@@ -32,6 +60,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
