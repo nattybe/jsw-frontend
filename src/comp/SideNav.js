@@ -1,54 +1,57 @@
-import React from 'react';
-import {
-  CDBSidebar,
-  CDBSidebarContent,
-  CDBSidebarFooter,
-  CDBSidebarHeader,
-  CDBSidebarMenu,
-  CDBSidebarMenuItem,
-} from 'cdbreact';
-import { NavLink } from 'react-router-dom';
+import React from "react";
+import {} from "cdbreact";
+import { NavLink } from "react-router-dom";
 
 const Sidebar = () => {
+  const changeTheme = () => {
+    const theme = document.querySelector(".App").getAttribute("data-theme");
+    document.documentElement.classList.add("theme-transition");
+    if (theme === "light") {
+      document.querySelector(".App").setAttribute("data-theme", "dark");
+      document.getElementById("theme-toggler").classList.add("fa-sun");
+      document.getElementById("theme-toggler").classList.remove("fa-moon");
+    } else {
+      document.querySelector(".App").setAttribute("data-theme", "light");
+      document.getElementById("theme-toggler").classList.add("fa-moon");
+      document.getElementById("theme-toggler").classList.remove("fa-sun");
+    }
+    window.setTimeout(function () {
+      document.documentElement.classList.remove("theme-transition");
+    }, 1000);
+  };
   return (
-    <div className='sidebar'>
-      <CDBSidebar textColor="#fff" backgroundColor="#333">
-        {/* <CDBSidebarHeader prefix={<i className="fa fa-bars fa-large"></i>}>
-          <a href="/" className="text-decoration-none" style={{ color: 'inherit' }}>
-            Sidebar
-          </a>
-        </CDBSidebarHeader> */}
-        <CDBSidebarContent className="sidebar-content">
-          <CDBSidebarMenu>
-            <NavLink exact to="/" activeClassName="activeClicked">
-              <CDBSidebarMenuItem icon="columns">Dashboard</CDBSidebarMenuItem>
-            </NavLink>
-            <NavLink exact to="/tables" activeClassName="activeClicked">
-              <CDBSidebarMenuItem icon="table">Tables</CDBSidebarMenuItem>
-            </NavLink>
-            <NavLink exact to="/profile" activeClassName="activeClicked">
-              <CDBSidebarMenuItem icon="user">Profile page</CDBSidebarMenuItem>
-            </NavLink>
-            <NavLink exact to="/analytics" activeClassName="activeClicked">
-              <CDBSidebarMenuItem icon="chart-line">Analytics</CDBSidebarMenuItem>
-            </NavLink>
-
-            <NavLink exact to="/hero404" target="_blank" activeClassName="activeClicked">
-              <CDBSidebarMenuItem icon="exclamation-circle">404 page</CDBSidebarMenuItem>
-            </NavLink>
-          </CDBSidebarMenu>
-        </CDBSidebarContent>
-
-        <CDBSidebarFooter style={{ textAlign: 'center' }}>
-          <div
-            style={{
-              padding: '20px 5px',
+    <div id="sidebar" className="sidebar sidebar-transition" data-sidebar="opened">
+      <div className="topper">
+        <div className="ico">
+          <i className="fas fa-home"></i>
+        </div>
+        <div className="ico">
+          <i className="far fa-sun"></i>
+        </div>
+        <div className="ico">
+          <i className="fas fa-search"></i>
+        </div>
+        <div className="ico">
+          <i
+            id="theme-toggler"
+            className="fas fa-sun"
+            onClick={() => {
+              changeTheme();
             }}
-          >
-            Sidebar Footer
-          </div>
-        </CDBSidebarFooter>
-      </CDBSidebar>
+          ></i>
+        </div>
+      </div>
+      <div className="footer">
+        <div className="ico">
+          <i className="fas fa-globe"></i>
+        </div>
+        <div className="ico">
+          <i className="fas fa-bell"></i>
+        </div>
+        {/* <div className="ico">
+          <i className="fas fa-home"></i>
+        </div> */}
+      </div>
     </div>
   );
 };
