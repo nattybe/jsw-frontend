@@ -13,6 +13,7 @@
   --secondary: #d0e0e1;
   --accent: #5a898c;
 }
+
 /* TODO (optional):  change the theme with media so it can detect the systems theme */
 
 .App {
@@ -22,20 +23,15 @@
   height: 100vh;
   color: var(--text);
   background-color: var(--secondary);
+  overflow: hidden;
 }
+
 .theme-transition,
 .theme-transition *,
 .theme-transition *:before,
 .theme-transition *:after {
   transition: all 750ms !important;
   transition-delay: 0 !important;
-}
-.sidebar-transition{
-  transition: margin 750ms;
-}
-nav {
-  position: fixed;
-  height: 100vh;
 }
 
 
@@ -51,8 +47,8 @@ nav {
   align-items: center;
   justify-content: space-between;
   font-size: calc(20px + 2vmin);
+  border-bottom: var(--accent)  solid 2px;
   border-radius: 0px 0px 10px 0px;
-
   .menu {
     /* color: var(--accent); */
   }
@@ -64,20 +60,23 @@ nav {
     border: var(--accent) solid 2px;
   }
 }
-.sidebar[data-sidebar="closed"]{
-  margin-left:-20%;
+
+.sidebar[data-sidebar="closed"] {
+  width: 0;
+  overflow: hidden;
+}
+
+.sidebar-transition {
+  transition: all 750ms !important;
 }
 .sidebar {
   display: flex;
   flex-direction: column;
   background: var(--background);
-  width: max-content;
-  margin-top: 1px;
-  height: 93%;
+  height: 100%;
   box-shadow: #000000 1px 0 30px;
   border-top-right-radius: 10px;
   justify-content: space-between;
-
   .ico {
     font-size: 40px;
     font-weight: 100;
@@ -86,9 +85,14 @@ nav {
     margin-top: 3px;
   }
 }
-.sidebar[data-sidebar="opened"]{
-  margin:0;
+
+.sidebar[data-sidebar="opened"] {
+  width: max-content;
 }
+
 .body {
-  margin-top:calc(50px + 2vmin);
+  display: flex;
+  flex-direction: row;
+  height: inherit;
+  /* margin-top: calc(50px + 2vmin); */
 }
