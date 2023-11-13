@@ -70,10 +70,12 @@
   transition: all 750ms !important;
 }
 .sidebar {
+  position: absolute;
+  height: -webkit-fill-available;
+  z-index: 10;
   display: flex;
   flex-direction: column;
   background: var(--background);
-  height: 100%;
   box-shadow: #000000 1px 0 30px;
   border-top-right-radius: 10px;
   justify-content: space-between;
@@ -94,5 +96,4 @@
   display: flex;
   flex-direction: row;
   height: inherit;
-  /* margin-top: calc(50px + 2vmin); */
 }

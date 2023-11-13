@@ -4,9 +4,8 @@ import { BrowserRouter as Router } from "react-router-dom";
 import Header from "./comp/header";
 import Footer from "./comp/footer";
 import Body from "./comp/body";
-{
-  /* TODO: the nav being on absolute top is preventing shit in the body */
-}
+import 'bootstrap/dist/css/bootstrap.min.css'
+
 
 function App() {
   return (
