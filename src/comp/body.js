@@ -1,16 +1,74 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Carousel from "react-bootstrap/Carousel";
 import "../style/body.css";
 import ExampleCarouselImage from "./CarouselImage";
+import FrontPage from "./front-page";
 const Body = () => {
+  const [frontPagers, setFrontPagers] = useState("Empty");
   const [index, setIndex] = useState(0);
+  const [searchedResult, setSearchedResult] = useState();
+  const [sortBy, setSortBy] = useState("");
   const [searchBadges, setSearchBadges] = useState(["Remote", "Fresh", "new"]);
+  const [searchPhrase, setSearchPhrase] = useState('');
   const [gettedTags, setGettedTags] = useState([
     "tag1",
     "tag2",
     "bigTag",
     "veryBigTag",
   ]);
+
+  
+  const jobListMaker = () => {
+    let jobList = [];
+    if (searchedResult) {
+      if (searchedResult.result.length !== 0) {
+        searchedResult.result.forEach((job) => {
+          jobList.push(
+            <div className="single-job" href="?there">
+              <div className="title">
+                <a href={job.url} className="title-title">
+                  {job.title}
+                </a>{" "}
+                <a
+                  href={job.url}
+                  target="_blank"
+                  className="fas fa-external-link"
+                  aria-hidden="true"
+                />
+              </div>
+              <p className="description">{job.content}</p>
+              {/* TODO: find the way of the dots for description*/}
+              <div className="external-info">
+                <span className="from">{job.from}</span>
+                <span className="when">{job.date}</span>
+              </div>
+            </div>
+          );
+        });
+      } else {
+        jobList.push(
+          <h1
+            className=""
+            style={{
+              color: "var(--accent)",
+              textAlign: "center",
+              marginTop: "10px",
+            }}
+          >
+            Empty Search
+          </h1>
+        );
+      }
+    } else {
+      jobList.push(
+        <div>
+          <FrontPage data={searchPhrase} frontPagers={frontPagers} />
+        </div>
+      );
+    }
+    return jobList;
+  };
+
   const addTags = (tag) => {
     setSearchBadges([...searchBadges, tag]);
   };
@@ -82,6 +140,22 @@ const Body = () => {
   const handleSelect = (selectedIndex) => {
     setIndex(selectedIndex);
   };
+  const handleSearch = async () => {
+    // const sortby = sortBy;
+    const filterby = "unixDATE";
+    fetch(
+      `http://localhost:3100?sq=${searchPhrase}&sortby=${sortBy}&filter=${filterby}`,
+      { method: "GET" }
+    )
+      .then((response) => response.text())
+      .then((result) => {
+        setSearchedResult(JSON.parse(result).respond);
+        console.log(searchedResult);
+      })
+      .catch((err) => {
+        alert(err.message);
+      });
+  };
   const handlefilter = () => {
     const thefilter = document.getElementById("filter");
     // alert(thefilter.getAttribute('data-filter'))
@@ -91,10 +165,13 @@ const Body = () => {
       thefilter.setAttribute("data-filter", "false");
     }
   };
+  useEffect(()=>{
+    handleSearch();
+  },[searchPhrase, sortBy])
   return (
     <div className="page">
       {/* <TopHeader /> */}
-      <div className="image-container">
+      <div className="image-container mt-3">
         <div className="image">
           <Carousel activeIndex={index} onSelect={handleSelect}>
             <Carousel.Item>
@@ -126,27 +203,34 @@ const Body = () => {
           </Carousel>
         </div>
       </div>
-      <form className="search">
+      <form className="search" onSubmit={(e) => {e.preventDefault(); handleSearch()}}>
         <input
+          id="searchInput"
           className="search-input"
           placeholder="Enter job title or keywords"
+          onChange={(e)=>setSearchPhrase(e.currentTarget.value)}
         />
         <button type="submit" className="search-button">
           <i className="fas fa-search" />
         </button>
       </form>
-      <div className="filter">
-        <span className="filter-toggle" onClick={handlefilter}>
+      <div className={searchedResult && searchedResult.result ? "filter" : "filter d-none"}>
+        <span className="filter-toggle d-none" onClick={handlefilter}>
           Filter <i className="fas fa-angle-down"></i>
         </span>
         {/* <span className="filter-toggle">Sort <i className="fas fa-angle-down"></i></span> */}
         {/* <label htmlFor="sortSelect">Sort by:</label> */}
-        <select name="" id="sortSelect" className="filter-toggle">
+        <select
+          name="sortSelect"
+          id="sortSelect"
+          onChange={(e) => setSortBy(e.currentTarget.value)}
+          className="filter-toggle"
+        >
           <option value="" hidden default>
             Sort by
           </option>
-          <option value="">Title</option>
-          <option value="">Date</option>
+          <option value="">Relevance</option>
+          <option value="unixDATE:desc">Recent</option>
           {/* <option value=""></option> */}
         </select>
         <div id="filter" className="filter-main" data-filter="false">
@@ -154,14 +238,17 @@ const Body = () => {
         </div>
       </div>
       <div className="jobs-list">
-        <div className='jobs-head'>
-           
+        <div className="jobs-head">
+          {searchedResult && searchedResult.result ? (
+            <div className="results">
+              {searchedResult.estimatedTotalHits} results
+            </div>
+          ) : (
+            ""
+          )}
+          <div className="divider"></div>
         </div>
-        <div className="jobs-body">
-          <div className="single-job">
-
-          </div>
-        </div>
+        <div className="jobs-body">{jobListMaker()}</div>
       </div>
       {/* <div className="selection">
         <div className="title2">Location</div>

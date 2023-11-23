@@ -86,6 +86,9 @@
     border-bottom: var(--secondary) 1px solid;
     margin-top: 3px;
   }
+  .ico a{
+    color:var(--text);
+  }
 }
 
 .sidebar[data-sidebar="opened"] {

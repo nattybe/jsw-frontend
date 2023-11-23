@@ -6,7 +6,6 @@ import Footer from "./comp/footer";
 import Body from "./comp/body";
 import 'bootstrap/dist/css/bootstrap.min.css'
 
-
 function App() {
   return (
     <Router>

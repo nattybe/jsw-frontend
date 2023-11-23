@@ -20,10 +20,16 @@ const Sidebar = () => {
     }, 1000);
   };
   return (
-    <div id="sidebar" className="sidebar sidebar-transition" data-sidebar="opened">
+    <div
+      id="sidebar"
+      className="sidebar sidebar-transition"
+      data-sidebar="opened"
+    >
       <div className="topper">
         <div className="ico">
-          <i className="fas fa-home"></i>
+          <a href="/">
+            <i className="fas fa-home"></i>
+          </a>
         </div>
         <div className="ico">
           <i className="far fa-sun"></i>

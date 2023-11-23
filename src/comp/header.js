@@ -20,7 +20,7 @@ const Header = () => {
       >
         <i className="fas fa-bars"></i>
       </div>
-      <div className="logo">አሃዱ</div>
+      <a href="/" className="logo">አሃዱ</a>
       <div className="profile">
         <i className="fas fa-user"></i>
       </div>
